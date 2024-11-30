@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">apotek_nakii</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="admin" view="colnames">
+<left>175</left>
+<top>28</top>
+<width>114</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `admin` (
+  `id` char(10) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `PASSWORD` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="detail_penjualan" view="colnames">
+<left>536</left>
+<top>11</top>
+<width>157</width>
+<height>176</height>
+<sql_create_table>CREATE TABLE `detail_penjualan` (
+  `id_detail_penjualan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_penjualan` varchar(10) DEFAULT NULL,
+  `id_obat` varchar(10) DEFAULT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` decimal(15,2) NOT NULL,
+  PRIMARY KEY (`id_detail_penjualan`),
+  KEY `id_penjualan` (`id_penjualan`),
+  KEY `id_obat` (`id_obat`),
+  CONSTRAINT `detail_penjualan_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id_penjualan`),
+  CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`id_obat`) REFERENCES `stok_obat` (`id_obat`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="detail_resep" view="colnames">
+<left>435</left>
+<top>287</top>
+<width>95</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `detail_resep` (
+  `id_detail` int(11) NOT NULL AUTO_INCREMENT,
+  `id_resep` varchar(10) DEFAULT NULL,
+  `id_obat` varchar(10) DEFAULT NULL,
+  `jumlah` int(11) NOT NULL,
+  `dosis` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_detail`),
+  KEY `id_resep` (`id_resep`),
+  KEY `id_obat` (`id_obat`),
+  CONSTRAINT `detail_resep_ibfk_1` FOREIGN KEY (`id_resep`) REFERENCES `resep_obat` (`id_resep`),
+  CONSTRAINT `detail_resep_ibfk_2` FOREIGN KEY (`id_obat`) REFERENCES `stok_obat` (`id_obat`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="karyawan" view="colnames">
+<left>586</left>
+<top>258</top>
+<width>151</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `karyawan` (
+  `id_karyawan` varchar(10) NOT NULL,
+  `nama_karyawan` varchar(100) NOT NULL,
+  `jabatan` varchar(50) NOT NULL,
+  `alamat_karyawan` varchar(255) DEFAULT NULL,
+  `telepon_karyawan` varchar(20) DEFAULT NULL,
+  `gaji` decimal(15,2) NOT NULL,
+  `tanggal_masuk` date NOT NULL,
+  PRIMARY KEY (`id_karyawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="pasien" view="colnames">
+<left>210</left>
+<top>333</top>
+<width>122</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `pasien` (
+  `id_pasien` varchar(10) NOT NULL,
+  `nama_pasien` varchar(100) NOT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `telepon` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_pasien`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="penjualan" view="colnames">
+<left>812</left>
+<top>147</top>
+<width>151</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `penjualan` (
+  `id_penjualan` varchar(10) NOT NULL,
+  `tanggal_penjualan` date NOT NULL,
+  `id_karyawan` varchar(10) DEFAULT NULL,
+  `total_transaksi` decimal(15,2) NOT NULL,
+  PRIMARY KEY (`id_penjualan`),
+  KEY `id_karyawan` (`id_karyawan`),
+  CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="resep_obat" view="colnames">
+<left>46</left>
+<top>179</top>
+<width>127</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `resep_obat` (
+  `id_resep` varchar(10) NOT NULL,
+  `id_pasien` varchar(10) DEFAULT NULL,
+  `tanggal_resep` date NOT NULL,
+  PRIMARY KEY (`id_resep`),
+  KEY `id_pasien` (`id_pasien`),
+  CONSTRAINT `resep_obat_ibfk_1` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+<table name="stok_obat" view="colnames">
+<left>328</left>
+<top>36</top>
+<width>110</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `stok_obat` (
+  `id_obat` varchar(10) NOT NULL,
+  `nama_obat` varchar(100) NOT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `harga` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id_obat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
